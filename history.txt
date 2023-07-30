@@ -1,0 +1,101 @@
+    1  exit
+    2  git config --global credential.helper cache
+    3  lab-configure
+    4  git clone https://github.com/Edgardostgo/DO180-apps.git
+    5  gi remote -v
+    6  git remote -v
+    7  git clone https://github.com/Edgardostgo/DO180-apps.git
+    8  ls
+    9  cd DO180-apps
+   10  git status
+   11  git checkout -b testbranch
+   12  echo "DO180" > TEST
+   13  git add .
+   14  git commit -m "DO180"
+   15  git push --set-upstream origin testbranch
+   16  echo "OCP4" > TEST
+   17  /usr/local/etc/ocp4.config
+   18  echo "OCP4" > TEST
+   19  git add .
+   20  git commit -m "OCP4"
+   21  git push
+   22  head README.md
+   23  lab container-create start
+   24  podman login registry.redhat.io
+   25  podman run --name mysql-basic > -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 > -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 > -d registry.redhat.io/rhel8/mysql-80:1
+   26  podman run --name mysql-basic -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80:1
+   27  podman images
+   28  podman ps
+   29  podman ps --format "{{.ID}} {{.Image}} {{.Names}}" 2d37682eb33a
+   30  podman ps --format "{{.ID}} {{.Image}} {{.Names}}"
+   31  podman exec -it mysql-basic /bin/bash
+   32* 
+   33  lab container-rootless start
+   34* 
+   35  lab container-rootless finish
+   36  podman run -d -p 8080:80 --name httpd-basic \ quay.io redhattraining/httpd-parent:2.4 
+   37  podman run -d -p 8080:80 --name httpd-basic 
+   38  podman run -d -p 8080:80 --name httpd-basic \
+   39  podman exec -it httpd-basic /bin/bash 
+   40  lab container-review grade
+   41  lab container-review finish
+   42  podman login registry.redhat.io
+   43  podman run --name mysql-db registry.redhat.io/rhel8/mysql-80:1
+   44  podman logs mysql-db
+   45  podman run --name mysql \ -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 \ -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 \ > registry.redhat.io/rhel8/mysql-80:1 
+   46  podman run --name mysql \ -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 \ -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 
+   47  podman run --name mysql \ -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 \ -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1
+   48  podman run --name mysql \ -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 \ -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1
+   49  podman run --name mysql \ -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 \ -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 \registry.redhat.io/rhel8/mysql-80:1
+   50  podman run --name mysql \ -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 \ -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55
+   51  podman run --name mysql -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 > registry.redhat.io/rhel8/mysql-80:1 
+   52  podman run --name mysql -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 >
+   53  podman run --name mysql -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1
+   54  podman ps
+   55  podman cp ~/DO180/labs/manage-lifecycle/db.sql mysql:/
+   56  podman cp ~/DO180/labs/manage-lifecycle/db.sql mysql
+   57  podman cp ~/DO180/labs/manage-lifecycle/db.sql mysql:/
+   58  podman ps
+   59  podman cp ~/DO180/labs/manage-lifecycle/db.sql mysql2:/
+   60  podman cp ~/DO180/labs/manage-lifecycle/db.sql mysql:/
+   61  ls /home/student/DO180
+   62* 
+   63  lab manage-lifecycle start
+   64  podman cp ~/DO180/labs/manage-lifecycle/db.sql mysql:/
+   65  podman ps
+   66  podman exec mysql /bin/bash -c > 'mysql -uuser1 -pmypa55 items < /db.sql'
+   67  podman exec mysql /bin/bash -c 'mysql -uuser1 -pmypa55 items /db.sql'
+   68  podman run --name mysql-2 -it \ registry.redhat.io/rhel8/mysql-80:1 /bin/bash
+   69  podman run --name mysql-2 -it registry.redhat.io/rhel8/mysql-80:1 /bin/bash
+   70  podman ps -a
+   71  podman exec mysql /bin/bash -c  'mysql -uuser1 -pmypa55 -e "select * from items.Projects;"'
+   72  podman exec mysql /bin/bash -c 'mysql -uuser1 -pmypa55 -e "select * from items.Projects;"'
+   73  lab manage-lifecycle finish
+   74  clear 
+   75  mkdir /home/student/dbfiles
+   76  podman unshare chown -R 27:27 /home/student/dbfiles
+   77  sudo semanage fcontext -a -t container_file_t '/home/student/dbfiles(/.*)?'
+   78  sudo restorecon -Rv /home/student/dbfiles
+   79  podman run -v /home/student/dbfiles:/var/lib/mysql rhmap47/mysql
+   80  lab manage-storage start
+   81  mkdir -vp /home/student/local/mysql
+   82  sudo semanage fcontext -a -t container_file_t '/home/student/local/mysql(/.*)?'
+   83  sudo restorecon -R /home/student/local/mysql
+   84  ls -ldZ /home/student/local/mysql
+   85  podman unshare chown 27:27 /home/student/local/mysql
+   86  podman login registry.redhat.io
+   87  podman pull registry.redhat.io/rhel8/mysql-80:1
+   88  podman run --name persist-db > -d -v /home/student/local/mysql:/var/lib/mysql/data > -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 > -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 podman run --name persist-db -d -v /home/student/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 
+   89  podman run --name persist-db  -d -v /home/student/local/mysql:/var/lib/mysql/data  -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1 
+   90  podman run --name persist-db  -d -v /home/student/local/mysql:/var/lib/mysql/data  -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 
+   91  podman run --name persist-db  -d -v /home/student/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 
+   92  podman run --name persist-db -d -v /home/student/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 
+   93  podman run --name persist-db -d -v /home/student/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 /
+   94  podman run --name persist-db -d -v /home/student/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 
+   95  podman run --name persist-db -d -v /home/student/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1
+   96  podman ps --format="{{.ID}} {{.Names}} {{.Status}}"
+   97  ls -ld /home/student/local/mysql/items
+   98  podman unshare ls -ld /home/student/local/mysql/items
+   99  lab manage-storage finish
+  100  history
+  101  history > ~/DO180-apps/history.txt
